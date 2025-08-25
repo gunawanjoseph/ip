@@ -6,9 +6,8 @@ public class HawkerUncle {
         System.out.println("  Hello! I'm HawkerUncle");
         System.out.println("  What can I do for you?");
 
-        String[] texts = new String[100];
-        int textCount = 0;
-        boolean[] isMarked = new boolean[100];
+        Task[] tasks = new Task[100];
+        int taskCount = 0;
 
         while(true){
             String input = scanner.nextLine();
@@ -18,27 +17,26 @@ public class HawkerUncle {
                 break;
             }
             else if (input.equalsIgnoreCase("list")){
-                for (int i = 0; i < textCount; ++i){
-                    String status = isMarked ? "[X]" : "[ ]";
-                    System.out.println("  " + (i + 1) + ". " + status + " " + texts[i]);
+                for (int i = 0; i < taskCount; ++i){
+                    System.out.println("  " + (i + 1) + ". " + tasks[i]);
                 }
             }
             else if (input.toLowerCase().startsWith("mark ")){
                 int idx = Integer.parseInt(input.split(" ")[1]) - 1;
-                isMarked[idx] = true;
+                tasks[idx].isDone = true;
                 System.out.println("  Nice! I've marked this task as done:");
-                System.out.println("  [X] " + texts[idx]);
+                System.out.println("  " + tasks[idx]);
             }
             else if (input.toLowerCase().startsWith("unmark ")){
                 int idx = Integer.parseInt(input.split(" ")[1]) - 1;
-                isMarked[idx] = false;
+                tasks[idx].isDone = false;
                 System.out.println("  OK, I've marked this task as not done yet:");
-                System.out.println("  [ ] " + texts[idx]);
+                System.out.println("  " + tasks[idx]);
             }
             else{
                 System.out.println("  added: " + input);
-                texts[textCount] = input;
-                textCount++;
+                tasks[taskCount] = new Task(input);
+                taskCount++;
             }
         }
 
