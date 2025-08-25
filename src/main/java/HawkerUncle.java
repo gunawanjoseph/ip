@@ -17,6 +17,7 @@ public class HawkerUncle {
                 break;
             }
             else if (input.equalsIgnoreCase("list")){
+                System.out.println("  Here are the tasks in your list:");
                 for (int i = 0; i < taskCount; ++i){
                     System.out.println("  " + (i + 1) + ". " + tasks[i]);
                 }
@@ -33,13 +34,36 @@ public class HawkerUncle {
                 System.out.println("  OK, I've marked this task as not done yet:");
                 System.out.println("  " + tasks[idx]);
             }
-            else{
-                System.out.println("  added: " + input);
-                tasks[taskCount] = new Task(input);
+            else if (input.toLowerCase().startsWith("todo ")) {
+                String description = input.substring(5).trim();
+                tasks[taskCount] = new ToDo(description);
                 taskCount++;
+                printTaskAdded(tasks[taskCount - 1].toString(), taskCount);
+            }
+            else if (input.toLowerCase().startsWith("deadline ")){
+                String[] sections = input.substring(9).split(" /by");
+                String description = sections[0].trim();
+                String by = sections[1].trim();
+                tasks[taskCount] = new Deadline(description, by);
+                taskCount++;
+                printTaskAdded(tasks[taskCount - 1].toString(), taskCount);
+            }
+            else if (input.toLowerCase().startsWith("event ")){
+                String[] sections = input.substring(6).split(" /from | /to ");
+                String description = sections[0].trim();
+                String from = sections[1].trim();
+                String to = sections[2].trim();
+                tasks[taskCount] = new Event(description, from, to);
+                taskCount++;
+                printTaskAdded(tasks[taskCount - 1].toString(), taskCount);
             }
         }
 
         scanner.close();
+    }
+    public static void printTaskAdded(String msg, int taskCount){
+        System.out.println("  Got it. I've added this task:");
+        System.out.println("    " + msg);
+        System.out.println("  Now you have " + taskCount + " tasks in the list.");
     }
 }
