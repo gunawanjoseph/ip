@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class HawkerUncle {
     public static void main(String[] args){
@@ -6,8 +7,7 @@ public class HawkerUncle {
         System.out.println("  Hello! I'm HawkerUncle");
         System.out.println("  What can I do for you?");
 
-        Task[] tasks = new Task[100];
-        int taskCount = 0;
+        ArrayList<Task> tasks = new ArrayList<>();
 
         while(true) {
             String input = scanner.nextLine().trim();
@@ -20,48 +20,53 @@ public class HawkerUncle {
             try {
                 if (input.equalsIgnoreCase("list")) {
                     System.out.println("  Here are the tasks in your list:");
-                    for (int i = 0; i < taskCount; ++i) {
-                        System.out.println("  " + (i + 1) + ". " + tasks[i]);
+                    for (int i = 0; i < tasks.size(); ++i) {
+                        System.out.println("  " + (i + 1) + ". " + tasks.get(i));
                     }
                 } else if (input.toLowerCase().startsWith("mark")) {
                     int idx = Integer.parseInt(input.split(" ")[1]) - 1;
-                    if (idx  < 0 || idx >= taskCount) throw new IndexOutOfBoundsException();
-                    tasks[idx].isDone = true;
+                    if (idx  < 0 || idx >= tasks.size()) throw new IndexOutOfBoundsException();
+                    tasks.get(idx).isDone = true;
                     System.out.println("  Nice! I've marked this task as done:");
-                    System.out.println("  " + tasks[idx]);
+                    System.out.println("  " + tasks.get(idx));
                 } else if (input.toLowerCase().startsWith("unmark")) {
                     int idx = Integer.parseInt(input.split(" ")[1]) - 1;
-                    if (idx < 0 || idx >= taskCount) throw new IndexOutOfBoundsException();
-                    tasks[idx].isDone = false;
+                    if (idx < 0 || idx >= tasks.size()) throw new IndexOutOfBoundsException();
+                    tasks.get(idx).isDone = false;
                     System.out.println("  OK, I've marked this task as not done yet:");
-                    System.out.println("  " + tasks[idx]);
+                    System.out.println("  " + tasks.get(idx));
+                } else if (input.toLowerCase().startsWith("delete")){
+                    int idx = Integer.parseInt(input.split(" ")[1]) - 1;
+                    if (idx < 0 || idx >= tasks.size()) throw new IndexOutOfBoundsException();
+                    Task removed = tasks.remove(idx);
+                    System.out.println("  Noted. I've removed this task:");
+                    System.out.println("    " + removed);
+                    System.out.println("  Now you have " + tasks.size() + " tasks in the list");
                 } else if (input.toLowerCase().startsWith("todo")) {
                     String description = input.substring(4).trim();
                     if (description.isBlank()) throw new IllegalArgumentException("The description of a todo cannot be empty.");
-                    tasks[taskCount] = new ToDo(description);
-                    taskCount++;
-                    printTaskAdded(tasks[taskCount - 1].toString(), taskCount);
+                    tasks.add(new ToDo(description));
+                    printTaskAdded(tasks.get(tasks.size() - 1).toString(), tasks.size());
                 } else if (input.toLowerCase().startsWith("deadline")) {
                     if (!input.contains(" /by")) throw new IllegalArgumentException("Deadline must contain /by");
                     String[] sections = input.substring(8).split(" /by", 2);
                     String description = sections[0].trim();
                     String by = sections[1].trim();
                     if (description.isBlank() || by.isBlank()) throw new IllegalArgumentException("Deadline description and /by cannot be empty");
-                    tasks[taskCount] = new Deadline(description, by);
-                    taskCount++;
-                    printTaskAdded(tasks[taskCount - 1].toString(), taskCount);
+                    tasks.add(new Deadline(description, by));
+                    printTaskAdded(tasks.get(tasks.size() - 1).toString(), tasks.size());
                 } else if (input.toLowerCase().startsWith("event")) {
-                    if (!input.contains(" /from") || !input.contains(" /to")) throw new IllegalArgumentException("Event must contain /from and /to");
+                    if (!input.contains(" /from") || !input.contains(" /to"))
+                        throw new IllegalArgumentException("Event must contain /from and /to");
                     String[] sections = input.substring(5).split(" /from| /to", 3);
                     String description = sections[0].trim();
                     String from = sections[1].trim();
                     String to = sections[2].trim();
-                    if (description.isBlank() || from.isBlank() || to.isBlank()) throw new IllegalArgumentException("Event description, /from, and /to cannot be empty");
-                    tasks[taskCount] = new Event(description, from, to);
-                    taskCount++;
-                    printTaskAdded(tasks[taskCount - 1].toString(), taskCount);
-                }
-                else{
+                    if (description.isBlank() || from.isBlank() || to.isBlank())
+                        throw new IllegalArgumentException("Event description, /from, and /to cannot be empty");
+                    tasks.add(new Event(description, from, to));
+                    printTaskAdded(tasks.get(tasks.size() - 1).toString(), tasks.size());
+                } else{
                     throw new UnsupportedOperationException("I'm sorry, I don't know what that means.");
                 }
             } catch (IllegalArgumentException e){

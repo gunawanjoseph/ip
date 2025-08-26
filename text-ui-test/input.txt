@@ -15,4 +15,8 @@ todo
 deadline /by test
 event second meeting /from Sunday 3 pm
 event /from Sunday 3pm /to 4pm
+delete 3
+list
+delete 1
+delete 2
 bye
