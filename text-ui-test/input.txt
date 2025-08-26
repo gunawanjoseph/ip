@@ -8,4 +8,11 @@ mark 3
 list
 unmark 3
 list
+blah
+mark 4
+unmark 4
+todo
+deadline /by test
+event second meeting /from Sunday 3 pm
+event /from Sunday 3pm /to 4pm
 bye
