@@ -13,7 +13,7 @@ public class HawkerUncle {
             String input = scanner.nextLine();
 
             if (input.equalsIgnoreCase("bye")){
-                System.out.println(" Bye. Hope to see you again soon!");
+                System.out.println("  Bye. Hope to see you again soon!");
                 break;
             }
             else if (input.equalsIgnoreCase("list")){
