@@ -1,8 +1,10 @@
+package HawkerUncle.ui;
+
 import java.util.Scanner;
 
 public class Ui {
     public void showWelcome() {
-        System.out.println("  Hello! I'm HawkerUncle");
+        System.out.println("  Hello! I'm HawkerUncle.HawkerUncle");
         System.out.println("  What can I do for you?");
     }
     public String readCommand() {

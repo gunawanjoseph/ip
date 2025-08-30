@@ -1,3 +1,7 @@
+package HawkerUncle.parser;
+
+import HawkerUncle.command.*;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -46,7 +50,7 @@ public class Parser {
         }
     }
 
-    // Delete Command Parsing
+    // Delete HawkerUncle.HawkerUncle.command.Command Parsing
     private static Command parseDeleteCommand(String fullCommand) {
         try {
             int idx = Integer.parseInt(fullCommand.split(" ")[1]) - 1;
@@ -56,7 +60,7 @@ public class Parser {
         }
     }
 
-    // ToDo Command Parsing
+    // HawkerUncle.task.ToDo HawkerUncle.HawkerUncle.command.Command Parsing
     private static Command parseToDoCommand(String fullCommand) {
         ArrayList<String> parsedData = new ArrayList<>();
 
@@ -69,18 +73,18 @@ public class Parser {
         return new AddCommand(parsedData);
     }
 
-    // Deadline Command Parsing
+    // HawkerUncle.HawkerUncle.task.Deadline HawkerUncle.HawkerUncle.command.Command Parsing
     private static Command parseDeadlineCommand(String fullCommand) {
         ArrayList<String> parsedData = new ArrayList<>();
 
         if (!fullCommand.contains(" /by")) {
-            throw new IllegalArgumentException("Deadline must contain /by.");
+            throw new IllegalArgumentException("HawkerUncle.HawkerUncle.task.Deadline must contain /by.");
         }
         String[] sections = fullCommand.substring(8).split(" /by", 2);
         String description = sections[0].trim();
         String by = sections[1].trim();
         if (description.isBlank() || by.isBlank()) {
-            throw new IllegalArgumentException("Deadline description and /by cannot be empty.");
+            throw new IllegalArgumentException("HawkerUncle.HawkerUncle.task.Deadline description and /by cannot be empty.");
         }
         parsedData.add("deadline");
         parsedData.add(description);
@@ -88,18 +92,18 @@ public class Parser {
         return new AddCommand(parsedData);
     }
 
-    // Event Command Parsing
+    // HawkerUncle.HawkerUncle.task.Event HawkerUncle.HawkerUncle.command.Command Parsing
     private static Command parseEventCommand(String fullCommand) {
         ArrayList<String> parsedData = new ArrayList<>();
         if (!fullCommand.contains(" /from") || !fullCommand.contains(" /to")) {
-            throw new IllegalArgumentException("Event must contain /from and /to.");
+            throw new IllegalArgumentException("HawkerUncle.HawkerUncle.task.Event must contain /from and /to.");
         }
         String[] sections = fullCommand.substring(5).split(" /from| /to", 3);
         String description = sections[0].trim();
         String from = sections[1].trim();
         String to = sections[2].trim();
         if (description.isBlank() || from.isBlank() || to.isBlank()) {
-            throw new IllegalArgumentException("Event description, /from, and /to cannot be empty.");
+            throw new IllegalArgumentException("HawkerUncle.HawkerUncle.task.Event description, /from, and /to cannot be empty.");
         }
         parsedData.add("event");
         parsedData.add(description);
@@ -109,7 +113,7 @@ public class Parser {
     }
 
     // Parse date and time to LocalDateTime
-    protected static LocalDateTime parseDateTime(String dateTimeStr) {
+    public static LocalDateTime parseDateTime(String dateTimeStr) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
         try {
             return LocalDateTime.parse(dateTimeStr, formatter);

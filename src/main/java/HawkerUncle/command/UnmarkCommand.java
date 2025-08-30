@@ -1,6 +1,12 @@
+package HawkerUncle.command;
+
+import HawkerUncle.storage.Storage;
+import HawkerUncle.task.TaskList;
+import HawkerUncle.ui.Ui;
+
 import java.io.IOException;
 
-public class UnmarkCommand implements Command{
+public class UnmarkCommand implements Command {
     private final int idx;
 
     public UnmarkCommand(int idx) {
@@ -9,7 +15,7 @@ public class UnmarkCommand implements Command{
 
     @Override public void execute(TaskList tasks, Ui ui, Storage storage) {
         if (idx < 0 || idx >= tasks.size()) throw new IndexOutOfBoundsException("Task number is invalid.");
-        tasks.get(idx).isDone = false;
+        tasks.get(idx).setDone(false);
 
         try {
             storage.save(tasks);

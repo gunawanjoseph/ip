@@ -1,14 +1,21 @@
+package HawkerUncle.command;
+
+import HawkerUncle.storage.Storage;
+import HawkerUncle.task.TaskList;
+import HawkerUncle.ui.Ui;
+import HawkerUncle.task.Task;
 import java.io.IOException;
 
-public class MarkCommand implements Command{
+public class DeleteCommand implements Command {
     private final int idx;
-    public MarkCommand(int idx) {
+    public DeleteCommand(int idx) {
         this.idx = idx;
     }
+
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         if (idx < 0 || idx >= tasks.size()) throw new IndexOutOfBoundsException("Task number is invalid.");
-        tasks.get(idx).isDone = true;
+        Task removed = tasks.remove(idx);
 
         try {
             storage.save(tasks);
@@ -16,9 +23,11 @@ public class MarkCommand implements Command{
             System.out.println("Task is not saved");
         }
 
-        System.out.println("  Nice! I've marked this task as done:");
-        System.out.println("  " + tasks.get(idx));
+        System.out.println("  Noted. I've removed this task:");
+        System.out.println("    " + removed);
+        System.out.println("  Now you have " + tasks.size() + " tasks in the list");
     }
+
     @Override
     public boolean isExit() {
         return false;

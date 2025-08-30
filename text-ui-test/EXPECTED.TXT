@@ -1,4 +1,4 @@
-  Hello! I'm HawkerUncle
+  Hello! I'm HawkerUncle.HawkerUncle
   What can I do for you?
   Got it. I've added this task:
     [T][ ] borrow book
@@ -34,9 +34,9 @@
   OOPS!!! Task number is invalid.
   OOPS!!! Task number is invalid.
   OOPS!!! The description of a todo cannot be empty.
-  OOPS!!! Deadline description and /by cannot be empty
-  OOPS!!! Event must contain /from and /to
-  OOPS!!! Event description, /from, and /to cannot be empty
+  OOPS!!! HawkerUncle.HawkerUncle.task.Deadline description and /by cannot be empty
+  OOPS!!! HawkerUncle.HawkerUncle.task.Event must contain /from and /to
+  OOPS!!! HawkerUncle.HawkerUncle.task.Event description, /from, and /to cannot be empty
   Noted. I've removed this task:
     [E][ ] project meeting (from: 12 January 2020 3PM to: 12 January 2020 5PM)
   Now you have 2 tasks in the list
