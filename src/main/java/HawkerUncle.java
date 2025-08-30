@@ -1,6 +1,10 @@
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 public class HawkerUncle {
     private static final String FILE_PATH = "./data/HawkerUncle.txt";
@@ -60,8 +64,9 @@ public class HawkerUncle {
                     if (!input.contains(" /by")) throw new IllegalArgumentException("Deadline must contain /by");
                     String[] sections = input.substring(8).split(" /by", 2);
                     String description = sections[0].trim();
-                    String by = sections[1].trim();
-                    if (description.isBlank() || by.isBlank()) throw new IllegalArgumentException("Deadline description and /by cannot be empty");
+                    String byStr = sections[1].trim();
+                    if (description.isBlank() || byStr.isBlank()) throw new IllegalArgumentException("Deadline description and /by cannot be empty");
+                    LocalDateTime by = parseDateTime(byStr);
                     tasks.add(new Deadline(description, by, false));
                     printTaskAdded(tasks.get(tasks.size() - 1).toString(), tasks.size());
                 } else if (input.toLowerCase().startsWith("event")) {
@@ -69,10 +74,12 @@ public class HawkerUncle {
                         throw new IllegalArgumentException("Event must contain /from and /to");
                     String[] sections = input.substring(5).split(" /from| /to", 3);
                     String description = sections[0].trim();
-                    String from = sections[1].trim();
-                    String to = sections[2].trim();
-                    if (description.isBlank() || from.isBlank() || to.isBlank())
+                    String fromStr = sections[1].trim();
+                    String toStr = sections[2].trim();
+                    if (description.isBlank() || fromStr.isBlank() || toStr.isBlank())
                         throw new IllegalArgumentException("Event description, /from, and /to cannot be empty");
+                    LocalDateTime from = parseDateTime(fromStr);
+                    LocalDateTime to = parseDateTime(toStr);
                     tasks.add(new Event(description, from, to, false));
                     printTaskAdded(tasks.get(tasks.size() - 1).toString(), tasks.size());
                 } else{
@@ -90,9 +97,18 @@ public class HawkerUncle {
 
         scanner.close();
     }
-    public static void printTaskAdded(String msg, int taskCount){
+    private static void printTaskAdded(String msg, int taskCount){
         System.out.println("  Got it. I've added this task:");
         System.out.println("    " + msg);
         System.out.println("  Now you have " + taskCount + " tasks in the list.");
+    }
+
+    private static LocalDateTime parseDateTime(String dateTimeStr){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+        try {
+            return LocalDateTime.parse(dateTimeStr, formatter);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Invalid date/time format. Please use 'yyyy-MM-dd HHmm' format.");
+        }
     }
 }
