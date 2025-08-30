@@ -1,13 +1,22 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.IOException;
 
 public class HawkerUncle {
+    private static final String FILE_PATH = "./data/HawkerUncle.txt";
     public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
         System.out.println("  Hello! I'm HawkerUncle");
         System.out.println("  What can I do for you?");
 
         ArrayList<Task> tasks = new ArrayList<>();
+        Storage storage = new Storage(FILE_PATH);
+
+        try {
+            tasks = storage.load();
+        } catch (IOException e) {
+            tasks = new ArrayList<>();
+        }
 
         while(true) {
             String input = scanner.nextLine().trim();
@@ -45,7 +54,7 @@ public class HawkerUncle {
                 } else if (input.toLowerCase().startsWith("todo")) {
                     String description = input.substring(4).trim();
                     if (description.isBlank()) throw new IllegalArgumentException("The description of a todo cannot be empty.");
-                    tasks.add(new ToDo(description));
+                    tasks.add(new ToDo(description, false));
                     printTaskAdded(tasks.get(tasks.size() - 1).toString(), tasks.size());
                 } else if (input.toLowerCase().startsWith("deadline")) {
                     if (!input.contains(" /by")) throw new IllegalArgumentException("Deadline must contain /by");
@@ -53,7 +62,7 @@ public class HawkerUncle {
                     String description = sections[0].trim();
                     String by = sections[1].trim();
                     if (description.isBlank() || by.isBlank()) throw new IllegalArgumentException("Deadline description and /by cannot be empty");
-                    tasks.add(new Deadline(description, by));
+                    tasks.add(new Deadline(description, by, false));
                     printTaskAdded(tasks.get(tasks.size() - 1).toString(), tasks.size());
                 } else if (input.toLowerCase().startsWith("event")) {
                     if (!input.contains(" /from") || !input.contains(" /to"))
@@ -64,11 +73,12 @@ public class HawkerUncle {
                     String to = sections[2].trim();
                     if (description.isBlank() || from.isBlank() || to.isBlank())
                         throw new IllegalArgumentException("Event description, /from, and /to cannot be empty");
-                    tasks.add(new Event(description, from, to));
+                    tasks.add(new Event(description, from, to, false));
                     printTaskAdded(tasks.get(tasks.size() - 1).toString(), tasks.size());
                 } else{
                     throw new UnsupportedOperationException("I'm sorry, I don't know what that means.");
                 }
+                storage.save(tasks);
             } catch (IllegalArgumentException e){
                 System.out.println("  OOPS!!! " + e.getMessage());
             } catch (IndexOutOfBoundsException e){
