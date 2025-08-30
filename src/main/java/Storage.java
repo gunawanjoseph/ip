@@ -53,10 +53,10 @@ public class Storage {
         return tasks;
     }
 
-    public void save(ArrayList<Task> tasks) throws IOException {
+    public void save(TaskList tasks) throws IOException {
         FileWriter fw = new FileWriter(filePath);
-        for (Task t: tasks){
-            fw.write(t.toSaveFormat() + System.lineSeparator());
+        for (int i = 0; i < tasks.size(); ++i){
+            fw.write(tasks.get(i).toSaveFormat() + System.lineSeparator());
         }
         fw.close();
     }
