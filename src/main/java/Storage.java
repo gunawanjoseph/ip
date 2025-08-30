@@ -1,9 +1,10 @@
 import java.io.File;
 import java.io.IOException;
 import java.io.FileWriter;
-import java.util.ArrayList;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Storage {
     private final String filePath;
@@ -35,10 +36,13 @@ public class Storage {
                     tasks.add(new ToDo(description, isDone));
                     break;
                 case "D":
-                    tasks.add(new Deadline(description, parts[3], isDone));
+                    LocalDateTime by = parseDateTime(parts[3]);
+                    tasks.add(new Deadline(description, by, isDone));
                     break;
                 case "E":
-                    tasks.add(new Event(description, parts[3], parts[4], isDone));
+                    LocalDateTime from = parseDateTime(parts[3]);
+                    LocalDateTime to = parseDateTime(parts[4]);
+                    tasks.add(new Event(description, from, to, isDone));
                     break;
                 default:
                     System.out.println("Unknown task type in file: " + type);
@@ -56,4 +60,10 @@ public class Storage {
         }
         fw.close();
     }
+
+    private LocalDateTime parseDateTime(String dateTimeStr) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+        return LocalDateTime.parse(dateTimeStr, formatter);
+    }
+
 }

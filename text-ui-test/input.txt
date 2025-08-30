@@ -1,8 +1,8 @@
 todo borrow book
 list
-deadline return book /by Sunday
+deadline return book /by 2019-10-15 1800
 list
-event project meeting /from Mon 2pm /to 4pm
+event project meeting /from 2020-01-12 1500 /to 2020-01-12 1700
 list
 mark 3
 list
@@ -13,8 +13,8 @@ mark 4
 unmark 4
 todo
 deadline /by test
-event second meeting /from Sunday 3 pm
-event /from Sunday 3pm /to 4pm
+event second meeting /from 2019-01-13 1500
+event /from 2020-01-12 1500  /to 2020-01-12 1900
 delete 3
 list
 delete 1
