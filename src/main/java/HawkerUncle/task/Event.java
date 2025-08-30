@@ -14,6 +14,18 @@ public class Event extends Task{
         this.to = to;
     }
 
+    public String getDescription() {
+        return this.description;
+    }
+
+    public LocalDateTime getFrom() {
+        return this.from;
+    }
+
+    public LocalDateTime getTo() {
+        return this.to;
+    }
+
     @Override
     public String toString(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy ha");

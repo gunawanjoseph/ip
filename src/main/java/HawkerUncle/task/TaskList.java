@@ -22,4 +22,7 @@ public class TaskList {
     public Task remove(int idx) {
         return tasks.remove(idx);
     }
+    public boolean contains(Task task) {
+        return tasks.contains(task);
+    }
 }

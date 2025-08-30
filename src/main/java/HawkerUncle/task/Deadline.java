@@ -11,6 +11,14 @@ public class Deadline extends Task{ //partially taken from Level4 A-Inheritance 
         this.by = by;
     }
 
+    public String getDescription() {
+        return this.description;
+    }
+
+    public LocalDateTime getBy() {
+        return this.by;
+    }
+
     @Override
     public String toString(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy ha");

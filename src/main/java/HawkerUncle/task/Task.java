@@ -9,6 +9,10 @@ public abstract class Task { //partially taken from Level 3 A-Classes at https:/
         this.isDone = isDone;
     }
 
+    public String getDescription() {
+        return this.description;
+    }
+
     public String getStatusIcon() {
         return (isDone ? "X" : " ");
     }
