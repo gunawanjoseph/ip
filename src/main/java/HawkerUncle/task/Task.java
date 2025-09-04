@@ -38,7 +38,7 @@ public abstract class Task { //partially taken from Level 3 A-Classes at https:/
      * @return A string representation of the task.
      */
     @Override
-    public String toString(){
+    public String toString() {
         return "[" + getStatusIcon() + "] " + this.description;
     }
 

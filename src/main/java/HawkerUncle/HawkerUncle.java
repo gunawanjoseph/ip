@@ -59,7 +59,7 @@ public class HawkerUncle {
      * Starts the HawkerUncle application.
      * @param args
      */
-    public static void main(String[] args){
+    public static void main(String[] args) {
         new HawkerUncle(FILE_PATH).run();
     }
 

@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * Represents an event task, which has a description, a status, a starting and ending time.
  */
-public class Event extends Task{
+public class Event extends Task {
     protected LocalDateTime from;
     protected LocalDateTime to;
 
@@ -17,7 +17,7 @@ public class Event extends Task{
      * @param to The end time of the event.
      * @param isDone The status of the event.
      */
-    public Event(String description, LocalDateTime from, LocalDateTime to, boolean isDone){
+    public Event(String description, LocalDateTime from, LocalDateTime to, boolean isDone) {
         super(description, isDone);
         this.from = from;
         this.to = to;
@@ -45,7 +45,7 @@ public class Event extends Task{
      * @return A string representation of the event task.
      */
     @Override
-    public String toString(){
+    public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy ha");
         return "[E]" + super.toString() + " (from: " + from.format(formatter) + " to: " + to.format(formatter) + ")";
     }
@@ -56,7 +56,7 @@ public class Event extends Task{
      * @return A string int eh format suitable for saving the task to storage.
      */
     @Override
-    public String toSaveFormat(){
+    public String toSaveFormat() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
         return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + from.format(formatter) + " | " + to.format(formatter);
     }

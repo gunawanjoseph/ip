@@ -81,7 +81,7 @@ public class AddCommand implements Command {
      * @param msg The message to be displayed, including the task details.
      * @param taskCount The number of tasks currently int the task list.
      */
-    private static void printTaskAdded(String msg, int taskCount){
+    private static void printTaskAdded(String msg, int taskCount) {
         System.out.println("  Got it. I've added this task:");
         System.out.println("    " + msg);
         System.out.println("  Now you have " + taskCount + " tasks in the list.");
