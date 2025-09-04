@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * Represents a deadline task, which has a description, a status, and a deadline
  */
-public class Deadline extends Task{ //partially taken from Level4 A-Inheritance https://nus-cs2103-ay2526s1.github.io/website/schedule/week2/project.html
+public class Deadline extends Task { //partially taken from Level4 A-Inheritance https://nus-cs2103-ay2526s1.github.io/website/schedule/week2/project.html
     protected LocalDateTime by;
 
     /**
@@ -15,7 +15,7 @@ public class Deadline extends Task{ //partially taken from Level4 A-Inheritance 
      * @param by The date and time by which the task should be completed.
      * @param isDone A boolean indicating whether the task is completed or not.
      */
-    public Deadline(String description, LocalDateTime by, boolean isDone){
+    public Deadline(String description, LocalDateTime by, boolean isDone) {
         super(description, isDone);
         this.by = by;
     }
@@ -34,7 +34,7 @@ public class Deadline extends Task{ //partially taken from Level4 A-Inheritance 
      * @return A string representation of the deadline task.
      */
     @Override
-    public String toString(){
+    public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy ha");
         return "[D]" + super.toString() + " (by: " + by.format(formatter) + ")";
     }
@@ -45,7 +45,7 @@ public class Deadline extends Task{ //partially taken from Level4 A-Inheritance 
      * @return A string in the format suitable for saving the task to storage.
      */
     @Override
-    public String toSaveFormat(){
+    public String toSaveFormat() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
         return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + by.format(formatter);
     }

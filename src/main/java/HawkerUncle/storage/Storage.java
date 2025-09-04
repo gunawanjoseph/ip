@@ -23,7 +23,7 @@ public class Storage {
      * Initializes the Storage object with the given file path.
      * @param filePath
      */
-    public Storage(String filePath){
+    public Storage(String filePath) {
         this.filePath = filePath;
     }
 
@@ -56,20 +56,20 @@ public class Storage {
             String description = parts[2];
 
             switch (type) {
-                case "T":
-                    tasks.add(new ToDo(description, isDone));
-                    break;
-                case "D":
-                    LocalDateTime by = parseDateTime(parts[3]);
-                    tasks.add(new Deadline(description, by, isDone));
-                    break;
-                case "E":
-                    LocalDateTime from = parseDateTime(parts[3]);
-                    LocalDateTime to = parseDateTime(parts[4]);
-                    tasks.add(new Event(description, from, to, isDone));
-                    break;
-                default:
-                    System.out.println("Unknown task type in file: " + type);
+            case "T":
+                tasks.add(new ToDo(description, isDone));
+                break;
+            case "D":
+                LocalDateTime by = parseDateTime(parts[3]);
+                tasks.add(new Deadline(description, by, isDone));
+                break;
+            case "E":
+                LocalDateTime from = parseDateTime(parts[3]);
+                LocalDateTime to = parseDateTime(parts[4]);
+                tasks.add(new Event(description, from, to, isDone));
+                break;
+            default:
+                System.out.println("Unknown task type in file: " + type);
             }
         }
 

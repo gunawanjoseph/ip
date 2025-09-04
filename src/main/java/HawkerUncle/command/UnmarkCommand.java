@@ -44,7 +44,8 @@ public class UnmarkCommand implements Command {
      * Checks if the command is an exit command
      * @return false, since this command is not an exit command.
      */
-    @Override public boolean isExit() {
+    @Override
+    public boolean isExit() {
         return false;
     }
 }
