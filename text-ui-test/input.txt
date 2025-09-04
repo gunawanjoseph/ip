@@ -15,6 +15,9 @@ todo
 deadline /by test
 event second meeting /from 2019-01-13 1500
 event /from 2020-01-12 1500  /to 2020-01-12 1900
+find book
+find
+find none
 delete 3
 list
 delete 1

@@ -35,6 +35,8 @@ public class Parser {
             return parseDeadlineCommand(fullCommand);
         } else if (fullCommand.toLowerCase().startsWith("event")) {
             return parseEventCommand(fullCommand);
+        } else if (fullCommand.toLowerCase().startsWith("find")) {
+          return parseFindCommand(fullCommand);
         } else {
             throw new UnsupportedOperationException("I'm sorry, I don't know what that means.");
         }
@@ -113,13 +115,13 @@ public class Parser {
         ArrayList<String> parsedData = new ArrayList<>();
 
         if (!fullCommand.contains(" /by")) {
-            throw new IllegalArgumentException("HawkerUncle.HawkerUncle.task.Deadline must contain /by.");
+            throw new IllegalArgumentException("Deadline must contain /by.");
         }
         String[] sections = fullCommand.substring(8).split(" /by", 2);
         String description = sections[0].trim();
         String by = sections[1].trim();
         if (description.isBlank() || by.isBlank()) {
-            throw new IllegalArgumentException("HawkerUncle.HawkerUncle.task.Deadline description and /by cannot be empty.");
+            throw new IllegalArgumentException("Deadline description and /by cannot be empty.");
         }
         parsedData.add("deadline");
         parsedData.add(description);
@@ -136,14 +138,14 @@ public class Parser {
     private static Command parseEventCommand(String fullCommand) throws IllegalArgumentException {
         ArrayList<String> parsedData = new ArrayList<>();
         if (!fullCommand.contains(" /from") || !fullCommand.contains(" /to")) {
-            throw new IllegalArgumentException("HawkerUncle.HawkerUncle.task.Event must contain /from and /to.");
+            throw new IllegalArgumentException("Event must contain /from and /to.");
         }
         String[] sections = fullCommand.substring(5).split(" /from| /to", 3);
         String description = sections[0].trim();
         String from = sections[1].trim();
         String to = sections[2].trim();
         if (description.isBlank() || from.isBlank() || to.isBlank()) {
-            throw new IllegalArgumentException("HawkerUncle.HawkerUncle.task.Event description, /from, and /to cannot be empty.");
+            throw new IllegalArgumentException("Event description, /from, and /to cannot be empty.");
         }
         parsedData.add("event");
         parsedData.add(description);
@@ -153,7 +155,23 @@ public class Parser {
     }
 
     /**
-     * Parses the date adn time string to a 'LocalDateTime' object
+     * Parses the 'Find' command and returns a "FindCommand" object.
+     * @param fullCommand The full command string input by the user.
+     * @return A 'FindCommand' object with the provided keyword
+     * @throws IllegalArgumentException If the keyword is empty.
+     */
+    private static FindCommand parseFindCommand(String fullCommand) throws IllegalArgumentException {
+        String word = fullCommand.substring(4).trim();
+
+        if (word.isEmpty()) {
+            throw new IllegalArgumentException("Keyword cannot be empty.");
+        } else {
+            return new FindCommand(word);
+        }
+    }
+
+    /**
+     * Parses the date and time string to a 'LocalDateTime' object
      * The expected format is "yyyy-MM-dd HHmm"
      * @param dateTimeStr The date adn time string to parse.
      * @return The parsed 'LocalDateTime' object

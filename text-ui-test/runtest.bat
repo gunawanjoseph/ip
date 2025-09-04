@@ -6,8 +6,10 @@ if not exist ..\bin mkdir ..\bin
 REM delete output from previous run
 if exist ACTUAL.TXT del ACTUAL.TXT
 
-REM compile the code into the bin folder
-javac  -cp ..\src\main\java -Xlint:none -d ..\bin ..\src\main\java\*.java
+REM Compiling all .java files recursively under src/main/java
+for /r src\main\java %%f in (*.java) do javac -cp src\main\java -Xlint:none -d bin %%f
+
+
 IF ERRORLEVEL 1 (
     echo ********** BUILD FAILURE **********
     exit /b 1
