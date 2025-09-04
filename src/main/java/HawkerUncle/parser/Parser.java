@@ -6,10 +6,18 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-
+/**
+ * Parses user input commands and creates the appropriate command objects.
+ * This class is responsible for interpreting the full command string from user input.
+ */
 public class Parser {
-
-    public static Command parse(String fullCommand) {
+    /**
+     * Parses the full user command string adn returns the corresponding Command object.
+     * @param fullCommand The full command string input by the user.
+     * @return The appropriate 'Command' object based on the user input.
+     * @throws UnsupportedOperationException If the command is unknown or not recognised.
+     */
+    public static Command parse(String fullCommand) throws UnsupportedOperationException {
         if (fullCommand.equalsIgnoreCase("bye")) {
             return new ByeCommand();
         }
@@ -32,7 +40,13 @@ public class Parser {
         }
     }
 
-    private static Command parseMarkCommand(String fullCommand) {
+    /**
+     * Parses the "mark" command and returns a "MarkCommand" object
+     * @param fullCommand The full command string input by the user.
+     * @return A 'MarkCommand' object with the task index to mark as done.
+     * @throws IllegalArgumentException If the task number is invalid.
+     */
+    private static MarkCommand parseMarkCommand(String fullCommand) throws IllegalArgumentException {
         try {
             int idx = Integer.parseInt(fullCommand.split(" ")[1]) - 1;
             return new MarkCommand(idx);
@@ -41,7 +55,13 @@ public class Parser {
         }
     }
 
-    private static Command parseUnmarkCommand(String fullCommand) {
+    /**
+     * Parses the "unmark" command and returns a "UnmarkCommand" object
+     * @param fullCommand The full command string input by the user.
+     * @return A 'UnmarkCommand' object with the task index to mark as not completed.
+     * @throws IllegalArgumentException If the task number is invalid.
+     */
+    private static UnmarkCommand parseUnmarkCommand(String fullCommand) throws IllegalArgumentException {
         try {
             int idx = Integer.parseInt(fullCommand.split(" ")[1]) - 1;
             return new UnmarkCommand(idx);
@@ -50,8 +70,13 @@ public class Parser {
         }
     }
 
-    // Delete HawkerUncle.HawkerUncle.command.Command Parsing
-    private static Command parseDeleteCommand(String fullCommand) {
+    /**
+     * Parses the "delete" command and returns a "DeleteCommand" object
+     * @param fullCommand The full command string input by the user.
+     * @return A 'DeleteCommand' object with the task index to delete.
+     * @throws IllegalArgumentException If the task number is invalid.
+     */
+    private static DeleteCommand parseDeleteCommand(String fullCommand) throws IllegalArgumentException {
         try {
             int idx = Integer.parseInt(fullCommand.split(" ")[1]) - 1;
             return new DeleteCommand(idx);
@@ -60,8 +85,13 @@ public class Parser {
         }
     }
 
-    // HawkerUncle.task.ToDo HawkerUncle.HawkerUncle.command.Command Parsing
-    private static Command parseToDoCommand(String fullCommand) {
+    /**
+     * Parses the "todo" command and returns an "AddCommand" object
+     * @param fullCommand The full command string input by the user.
+     * @return A 'AddCommand' object with the provided description
+     * @throws IllegalArgumentException If the description is empty.
+     */
+    private static Command parseToDoCommand(String fullCommand) throws IllegalArgumentException {
         ArrayList<String> parsedData = new ArrayList<>();
 
         String description = fullCommand.substring(4).trim();
@@ -73,8 +103,13 @@ public class Parser {
         return new AddCommand(parsedData);
     }
 
-    // HawkerUncle.HawkerUncle.task.Deadline HawkerUncle.HawkerUncle.command.Command Parsing
-    private static Command parseDeadlineCommand(String fullCommand) {
+    /**
+     * Parses the "Deadline" command and returns an "AddCommand" object
+     * @param fullCommand The full command string input by the user.
+     * @return A 'AddCommand' object with the provided description and deadline timing
+     * @throws IllegalArgumentException If the description or deadline time are empty or invalid.
+     */
+    private static Command parseDeadlineCommand(String fullCommand) throws IllegalArgumentException {
         ArrayList<String> parsedData = new ArrayList<>();
 
         if (!fullCommand.contains(" /by")) {
@@ -92,8 +127,13 @@ public class Parser {
         return new AddCommand(parsedData);
     }
 
-    // HawkerUncle.HawkerUncle.task.Event HawkerUncle.HawkerUncle.command.Command Parsing
-    private static Command parseEventCommand(String fullCommand) {
+    /**
+     * Parses the "Event" command and returns an "AddCommand" object
+     * @param fullCommand The full command string input by the user.
+     * @return A 'AddCommand' object with the provided description and event timings.
+     * @throws IllegalArgumentException If the description or event timings are empty or invalid.
+     */
+    private static Command parseEventCommand(String fullCommand) throws IllegalArgumentException {
         ArrayList<String> parsedData = new ArrayList<>();
         if (!fullCommand.contains(" /from") || !fullCommand.contains(" /to")) {
             throw new IllegalArgumentException("HawkerUncle.HawkerUncle.task.Event must contain /from and /to.");
@@ -112,8 +152,14 @@ public class Parser {
         return new AddCommand(parsedData);
     }
 
-    // Parse date and time to LocalDateTime
-    public static LocalDateTime parseDateTime(String dateTimeStr) {
+    /**
+     * Parses the date adn time string to a 'LocalDateTime' object
+     * The expected format is "yyyy-MM-dd HHmm"
+     * @param dateTimeStr The date adn time string to parse.
+     * @return The parsed 'LocalDateTime' object
+     * @throws IllegalArgumentException If the date and time format is invalid.
+     */
+    public static LocalDateTime parseDateTime(String dateTimeStr) throws IllegalArgumentException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
         try {
             return LocalDateTime.parse(dateTimeStr, formatter);

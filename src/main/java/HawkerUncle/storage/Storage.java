@@ -13,13 +13,30 @@ import java.util.ArrayList;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents a storage system that loads and saves tasks to a file.
+ */
 public class Storage {
     private final String filePath;
 
+    /**
+     * Initializes the Storage object with the given file path.
+     * @param filePath
+     */
     public Storage(String filePath){
         this.filePath = filePath;
     }
 
+    /**
+     * Loads the list of tasks from the storage file.
+     * If the file does not exist, it will be created.
+     * The file format follows this structure for each task:
+     *  - T | isDone | description
+     *  - D | isDone | description | by
+     *  - E | isDone | description | from | to
+     * @return A list of tasks loaded from the file.
+     * @throws IOException If there is an error reading the file.
+     */
     public ArrayList<Task> load() throws IOException {
         ArrayList<Task> tasks = new ArrayList<>();
         File f = new File(filePath);
@@ -60,6 +77,15 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Saves the current list of tasks to the storage file.
+     * Each task is saved in the following format:
+     * - T | isDone | description
+     * - D | isDone | description | deadline
+     * - E | isDone | description | from | to
+     * @param tasks The list of tasks to be saved to the file.
+     * @throws IOException If there is an error writing to the file.
+     */
     public void save(TaskList tasks) throws IOException {
         FileWriter fw = new FileWriter(filePath);
         for (int i = 0; i < tasks.size(); ++i){
@@ -68,6 +94,12 @@ public class Storage {
         fw.close();
     }
 
+    /**
+     * Parses a date-time string into a LocalDateTime object.
+     * The expected format is "yyyy-MM-dd Hhmm"
+     * @param dateTimeStr The date-time string to be parsed.
+     * @return The parsed LocalDateTime object
+     */
     private LocalDateTime parseDateTime(String dateTimeStr) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
         return LocalDateTime.parse(dateTimeStr, formatter);

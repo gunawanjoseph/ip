@@ -12,13 +12,27 @@ import HawkerUncle.parser.Parser;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
 
+/**
+ * Represents a command that adds a task to the task list.
+ * This command parses the data and creates the corresponding task type and adds it to the task list.
+ */
 public class AddCommand implements Command {
     private final ArrayList<String> parsedData;
 
+    /**
+     * Initializes an AddCommand with the parsedData
+     * @param parsedData The data parsed from user input.
+     */
     public AddCommand(ArrayList<String> parsedData) {
         this.parsedData = parsedData;
     }
 
+    /**
+     * Executes the command to add a task to the task list based on the parsed data.
+     * @param tasks The list of tasks where the new task will be added
+     * @param ui The user interface for showing messages
+     * @param storage The storage object used to save the updated task list.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         try {
@@ -53,11 +67,20 @@ public class AddCommand implements Command {
         }
     }
 
+    /**
+     * Checks if this command is an exit command.
+     * @return false, since this command does not exit the program.
+     */
     @Override
     public boolean isExit() {
         return false;
     }
 
+    /**
+     * Prints a message confirming that a task has been added to the list.
+     * @param msg The message to be displayed, including the task details.
+     * @param taskCount The number of tasks currently int the task list.
+     */
     private static void printTaskAdded(String msg, int taskCount){
         System.out.println("  Got it. I've added this task:");
         System.out.println("    " + msg);
