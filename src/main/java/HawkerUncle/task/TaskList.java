@@ -2,8 +2,12 @@ package HawkerUncle.task;
 
 import java.util.ArrayList;
 
+/**
+ * Represents a list of task
+ */
 public class TaskList {
     private ArrayList<Task> tasks;
+
     public TaskList(ArrayList<Task> tasks) {
         this.tasks = tasks;
     }
