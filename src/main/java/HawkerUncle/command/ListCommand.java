@@ -15,11 +15,12 @@ public class ListCommand implements Command {
      * @param storage The storage object where tasks are saved and laoded.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        System.out.println("  Here are the tasks in your list:");
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
+        String str = "Here are the tasks in your list:\n";
         for (int i = 0; i < tasks.size(); ++i) {
-            System.out.println("  " + (i + 1) + "." + tasks.get(i).toString());
+            str = str + (i + 1) + "." + tasks.get(i).toString();
         }
+        return str;
     }
 
     /**

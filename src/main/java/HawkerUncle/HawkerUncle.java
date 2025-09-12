@@ -35,32 +35,21 @@ public class HawkerUncle {
     }
 
     /**
-     * Starts and runs the application.
-     * Displays the welcome message, reads commands from the user, parses the commands,
-     * executes the corresponding command, and continues until an exit command "bye" is issued.
-     */
-    public void run() {
-        ui.showWelcome();
-        boolean isExit = false;
-
-        while(!isExit) {
-            try {
-                String fullCommand = ui.readCommand();
-                Command c = Parser.parse(fullCommand);
-                c.execute(tasks, ui, storage);
-                isExit = c.isExit();
-            } catch (Exception e) {
-                ui.showError(e.getMessage());
-            }
-        }
-    }
-
-    /**
      * Starts the HawkerUncle application.
      * @param args
      */
     public static void main(String[] args) {
-        new HawkerUncle(FILE_PATH).run();
+        new HawkerUncle(FILE_PATH);
     }
-
+    public String getResponse(String input) {
+        try {
+            Command c = Parser.parse(input);
+            return c.execute(tasks, ui, storage);
+        } catch (Exception e) {
+            return ui.showError(e.getMessage());
+        }
+    }
+    public String getWelcome() {
+        return ui.getWelcome();
+    }
 }
