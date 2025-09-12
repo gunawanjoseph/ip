@@ -27,7 +27,7 @@ public class MarkCommand implements Command {
      * @param storage The storage object where tasks are saved and laoded.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         if (idx < 0 || idx >= tasks.size()) throw new IndexOutOfBoundsException("Task number is invalid.");
         tasks.get(idx).setDone(true);
 
@@ -37,8 +37,8 @@ public class MarkCommand implements Command {
             System.out.println("Task is not saved");
         }
 
-        System.out.println("  Nice! I've marked this task as done:");
-        System.out.println("  " + tasks.get(idx));
+        return "Nice! I've marked this task as done:\n"
+            + " " + tasks.get(idx);
     }
 
     /**

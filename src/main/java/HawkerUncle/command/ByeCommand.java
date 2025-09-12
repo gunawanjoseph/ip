@@ -16,8 +16,8 @@ public class ByeCommand implements Command {
      * @param storage The storage object where tasks are saved and loaded.
      */
     @Override
-    public void execute(TaskList task, Ui ui, Storage storage) {
-        System.out.println("Bye. Hope to see you again soon!");
+    public String execute(TaskList task, Ui ui, Storage storage) {
+        return "Bye. Hope to see you again soon!";
     }
 
     /**

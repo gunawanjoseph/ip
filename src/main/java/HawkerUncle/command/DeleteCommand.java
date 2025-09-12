@@ -27,7 +27,7 @@ public class DeleteCommand implements Command {
      * @param storage The storage object where tasks are saved and laoded.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         if (idx < 0 || idx >= tasks.size()) throw new IndexOutOfBoundsException("Task number is invalid.");
         Task removed = tasks.remove(idx);
 
@@ -36,10 +36,9 @@ public class DeleteCommand implements Command {
         } catch(IOException e) {
             System.out.println("Task is not saved");
         }
-
-        System.out.println("  Noted. I've removed this task:");
-        System.out.println("    " + removed);
-        System.out.println("  Now you have " + tasks.size() + " tasks in the list");
+        return "Noted. I've removed this task:\n"
+            + " " + removed + "\n"
+            + "Now you have " + tasks.size() + " tasks in the list";
     }
 
     /**

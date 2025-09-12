@@ -34,36 +34,33 @@ public class AddCommand implements Command {
      * @param storage The storage object used to save the updated task list.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         try {
             String taskType = parsedData.get(0);
+            Task task;
             if (taskType.equalsIgnoreCase("todo")) {
                 String description = parsedData.get(1);
-                Task task = new ToDo(description, false);
-                tasks.add(task);
-                printTaskAdded(task.toString(), tasks.size());
+                task = new ToDo(description, false);
             }else if (taskType.equalsIgnoreCase("deadline")) {
                 String description = parsedData.get(1);
                 String byStr = parsedData.get(2);
                 LocalDateTime by = Parser.parseDateTime(byStr);
-                Task task = new Deadline(description, by, false);
-                tasks.add(task);
-                printTaskAdded(task.toString(), tasks.size());
+                task = new Deadline(description, by, false);
             } else if (taskType.equalsIgnoreCase("event")) {
                 String description = parsedData.get(1);
                 String byStr = parsedData.get(2);
                 String toStr = parsedData.get(3);
                 LocalDateTime by = Parser.parseDateTime(byStr);
                 LocalDateTime to = Parser.parseDateTime(toStr);
-                Task task = new Event(description, by, to, false);
-                tasks.add(task);
-                printTaskAdded(task.toString(), tasks.size());
+                task = new Event(description, by, to, false);
             } else {
                 throw new IllegalArgumentException("Unknown task type.");
             }
+            tasks.add(task);
             storage.save(tasks);
+            return formatTaskAdded(task.toString(), tasks.size());
         } catch (Exception e) {
-            System.out.println("  OOPS!!! " + e.getMessage());
+            return "  OOPS!!! " + e.getMessage();
         }
     }
 
@@ -81,9 +78,9 @@ public class AddCommand implements Command {
      * @param msg The message to be displayed, including the task details.
      * @param taskCount The number of tasks currently int the task list.
      */
-    private static void printTaskAdded(String msg, int taskCount) {
-        System.out.println("  Got it. I've added this task:");
-        System.out.println("    " + msg);
-        System.out.println("  Now you have " + taskCount + " tasks in the list.");
+    private static String formatTaskAdded(String msg, int taskCount) {
+        return "Got it. I've added this task:\n"
+                + "  " + msg + "\n"
+                + "Now you have " + taskCount + " tasks in the list.";
     }
 }

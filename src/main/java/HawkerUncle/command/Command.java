@@ -14,7 +14,7 @@ public interface Command {
      * @param ui The user interface where messages are shown to the user.
      * @param storage The storage object where tasks are saved and loaded.
      */
-    public abstract void execute(TaskList tasks, Ui ui, Storage storage);
+    public abstract String execute(TaskList tasks, Ui ui, Storage storage);
 
     /**
      * Checks if the command is an exit command.
