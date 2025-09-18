@@ -72,4 +72,15 @@ public class Ui {
         return "OK, I've marked this task as not done yet:\n"
                 + " " + task;
     }
+
+    public static String showReminders(TaskList tasks) {
+        if (tasks.isEmpty()) {
+            return "No upcoming tasks to remind you about!";
+        }
+        StringBuilder str = new StringBuilder("Here are your upcoming tasks:\n");
+        for (int i = 0; i < tasks.size(); ++i) {
+            str.append(i + 1).append(". ").append(tasks.get(i)).append("\n");
+        }
+        return str.toString();
+    }
 }

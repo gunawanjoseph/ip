@@ -50,6 +50,10 @@ public abstract class Task { //partially taken from Level 3 A-Classes at https:/
         this.isDone = isDone;
     }
 
+    public boolean getDone() {
+        return this.isDone;
+    }
+
     /**
      * Converts the task to a format suitable for saving to storage.
      * @return A string in a format suitable for saving the task to storage.

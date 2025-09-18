@@ -37,6 +37,8 @@ public class Parser {
             return parseEventCommand(fullCommand);
         } else if (fullCommand.toLowerCase().startsWith("find")) {
           return parseFindCommand(fullCommand);
+        } else if (fullCommand.toLowerCase().startsWith("remind")) {
+            return parseRemindCommand(fullCommand);
         } else {
             throw new UnsupportedOperationException("I'm sorry, I don't know what that means.");
         }
@@ -184,5 +186,9 @@ public class Parser {
         } catch (Exception e) {
             throw new IllegalArgumentException("Invalid date/time format. Please use 'yyyy-MM-dd HHmm' format.");
         }
+    }
+
+    public static RemindCommand parseRemindCommand(String fullCommand) {
+        return new RemindCommand();
     }
 }
