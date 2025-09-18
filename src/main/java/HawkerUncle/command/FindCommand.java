@@ -29,7 +29,7 @@ public class FindCommand implements Command {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
-        ArrayList<Task> matchingTasks = new ArrayList<>();
+        TaskList matchingTasks = new TaskList();
 
         for (int i = 0; i < tasks.size(); ++i) {
             Task task = tasks.get(i);
@@ -39,13 +39,9 @@ public class FindCommand implements Command {
         }
 
         if (matchingTasks.isEmpty()) {
-            return "No task found";
+            return Ui.showNoTasksFound();
         } else {
-            String str = "Here are the matching tasks in your list:\n";
-            for (int i = 0; i < matchingTasks.size(); ++i) {
-                str = str + (i + 1) + "." + matchingTasks.get(i).toString() + "\n";
-            }
-            return str;
+            return Ui.showMatchingTasks(matchingTasks);
         }
     }
 

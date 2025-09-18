@@ -16,11 +16,7 @@ public class ListCommand implements Command {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
-        String str = "Here are the tasks in your list:\n";
-        for (int i = 0; i < tasks.size(); ++i) {
-            str = str + (i + 1) + "." + tasks.get(i).toString();
-        }
-        return str;
+        return Ui.showAllTasks(tasks);
     }
 
     /**

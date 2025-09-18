@@ -34,11 +34,10 @@ public class MarkCommand implements Command {
         try {
             storage.save(tasks);
         } catch(IOException e) {
-            System.out.println("Task is not saved");
+            return Ui.showError("Task number is invalid");
         }
 
-        return "Nice! I've marked this task as done:\n"
-            + " " + tasks.get(idx);
+        return Ui.showTaskMarked(tasks.get(idx));
     }
 
     /**
