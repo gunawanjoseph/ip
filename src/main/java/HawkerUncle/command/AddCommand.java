@@ -54,13 +54,13 @@ public class AddCommand implements Command {
                 LocalDateTime to = Parser.parseDateTime(toStr);
                 task = new Event(description, by, to, false);
             } else {
-                throw new IllegalArgumentException("Unknown task type.");
+                return Ui.showError("Unknown task type.");
             }
             tasks.add(task);
             storage.save(tasks);
-            return formatTaskAdded(task.toString(), tasks.size());
+            return Ui.showTaskAdded(task, tasks.size());
         } catch (Exception e) {
-            return "  OOPS!!! " + e.getMessage();
+            return Ui.showError("Unable to add task");
         }
     }
 
@@ -71,16 +71,5 @@ public class AddCommand implements Command {
     @Override
     public boolean isExit() {
         return false;
-    }
-
-    /**
-     * Prints a message confirming that a task has been added to the list.
-     * @param msg The message to be displayed, including the task details.
-     * @param taskCount The number of tasks currently int the task list.
-     */
-    private static String formatTaskAdded(String msg, int taskCount) {
-        return "Got it. I've added this task:\n"
-                + "  " + msg + "\n"
-                + "Now you have " + taskCount + " tasks in the list.";
     }
 }

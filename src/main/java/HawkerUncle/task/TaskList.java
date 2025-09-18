@@ -29,4 +29,7 @@ public class TaskList {
     public boolean contains(Task task) {
         return tasks.contains(task);
     }
+    public boolean isEmpty() {
+        return tasks.isEmpty();
+    }
 }

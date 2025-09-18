@@ -28,17 +28,17 @@ public class DeleteCommand implements Command {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
-        if (idx < 0 || idx >= tasks.size()) throw new IndexOutOfBoundsException("Task number is invalid.");
+        if (idx < 0 || idx >= tasks.size()) {
+            return Ui.showError("Task number is invalid.");
+        }
         Task removed = tasks.remove(idx);
 
         try {
             storage.save(tasks);
         } catch(IOException e) {
-            System.out.println("Task is not saved");
+            return Ui.showError("Unable to save tasks");
         }
-        return "Noted. I've removed this task:\n"
-            + " " + removed + "\n"
-            + "Now you have " + tasks.size() + " tasks in the list";
+        return Ui.showTaskDeleted(removed, tasks.size());
     }
 
     /**

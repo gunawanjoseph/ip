@@ -33,11 +33,10 @@ public class UnmarkCommand implements Command {
         try {
             storage.save(tasks);
         } catch(IOException e) {
-            System.out.println("Task is not saved");
+            return Ui.showError("Task is not saved");
         }
 
-        return "OK, I've marked this task as not done yet:\n"
-                + " " + tasks.get(idx);
+        return Ui.showTaskUnmarked(tasks.get(idx));
     }
 
     /**
