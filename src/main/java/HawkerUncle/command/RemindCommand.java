@@ -7,6 +7,7 @@ import HawkerUncle.task.Task;
 import HawkerUncle.task.TaskList;
 import HawkerUncle.ui.Ui;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class RemindCommand implements Command{
@@ -19,26 +20,31 @@ public class RemindCommand implements Command{
 
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) {
-        TaskList reminders = new TaskList();
+        TaskList reminders = getUpcomingTask(tasks);
+        return Ui.showReminders(reminders);
+    }
 
-        LocalDateTime now = LocalDateTime.now();
+    private TaskList getUpcomingTask(TaskList tasks) {
+        TaskList upcoming = new TaskList();
 
         for (int i = 0; i < tasks.size(); ++i) {
             Task task = tasks.get(i);
-            if (!task.getDone()) {
-                if (task instanceof Deadline) {
-                    Deadline d = (Deadline) task;
-                    if (d.getBy().isAfter(now)) {
-                        reminders.add(d);
-                    }
-                } else if (task instanceof Event) {
-                    Event e = (Event) task;
-                    if (e.getFrom().isAfter(now) || e.getTo().isAfter(now)) {
-                        reminders.add(e);
-                    }
-                }
+            if (!task.getDone() && isUpcoming(task)) {
+                upcoming.add(task);
             }
         }
-        return Ui.showReminders(reminders);
+
+        return upcoming;
+    }
+
+    private boolean isUpcoming(Task task) {
+        LocalDateTime now = LocalDateTime.now();
+        if (task instanceof Deadline deadline) {
+            return deadline.getBy().isAfter(now);
+        } else if (task instanceof Event event) {
+            return event.getFrom().isAfter(now) || event.getTo().isAfter(now);
+        } else {
+            return false;
+        }
     }
 }
