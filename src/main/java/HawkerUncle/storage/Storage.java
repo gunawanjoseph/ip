@@ -60,16 +60,18 @@ public class Storage {
                 tasks.add(new ToDo(description, isDone));
                 break;
             case "D":
+                assert parts.length == 4 : "Deadline task line must have 4 parts" + line;
                 LocalDateTime by = parseDateTime(parts[3]);
                 tasks.add(new Deadline(description, by, isDone));
                 break;
             case "E":
+                assert parts.length == 5 : "Event task line must have 5 parts" + line;
                 LocalDateTime from = parseDateTime(parts[3]);
                 LocalDateTime to = parseDateTime(parts[4]);
                 tasks.add(new Event(description, from, to, isDone));
                 break;
             default:
-                System.out.println("Unknown task type in file: " + type);
+                assert false : "Unknown task type in storage file: " + type;
             }
         }
 
