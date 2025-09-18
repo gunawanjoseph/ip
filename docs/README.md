@@ -171,7 +171,7 @@ Here are your upcoming tasks:
 ```
 ![Screenshot of Hawker Uncle](/data/images/ReminderDemonstration.png)
 
-##Summary
+## Summary
 HawkerUncle helps you:
 - Add, view, and manage ToDos, Deadlines, and Events.
 - Search and filter tasks.
